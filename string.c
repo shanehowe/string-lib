@@ -116,7 +116,7 @@ string* string_substr(const string* str, size_t start_index, size_t end_index)
         return NULL;
     }
 
-    int i = 0;
+    size_t i = 0;
     while (start_index < end_index) {
         buffer[i++] = str->data[start_index++];
     }
