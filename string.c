@@ -94,7 +94,7 @@ bool string_isdigit(const string* str)
 int string_count_chars(const string* str, char char_to_count)
 {
     int count = 0;
-    for (int i = 0; i < str->length; i++) {
+    for (size_t i = 0; i < str->length; i++) {
         if (str->data[i] == char_to_count)
             count++;
     }
@@ -135,13 +135,13 @@ int main(void)
     string_concat(test_str, " World");
     string_concat(test_str, "\nGoodbye World");
 
-    for (int i = 0; i < test_str->length; i++) {
+    for (size_t i = 0; i < test_str->length; i++) {
         printf("%c", test_str->data[i]);
     }
 
     string* substr = string_substr(test_str, 0, 5);
     printf("\n");
-    for (int i = 0; i < substr->length; i++) {
+    for (size_t i = 0; i < substr->length; i++) {
         printf("%c", substr->data[i]);
     }
     printf("\n");
