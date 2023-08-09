@@ -1,15 +1,4 @@
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <ctype.h>
-
-typedef struct {
-    char*   data;     // strings value
-    size_t  length;   // current string length equivelent to strlen(str->data)
-    size_t  capacity; // total space allocated for str->data. for internal use only
-} string;
-
+#include "string_lib.h"
 
 string* string_init(const char* raw_str)
 {
@@ -219,27 +208,3 @@ bool string_reserve(string* str, size_t new_capacity)
 
     return true;
 }
-
-int main(void)
-{
-    string* test_str = string_init("Hello");
-    string_concat(test_str, " World");
-    string_concat(test_str, "\nGoodbye World");
-
-    for (size_t i = 0; i < test_str->length; i++) {
-        printf("%c", test_str->data[i]);
-    }
-
-    string* substr = string_substr(test_str, 0, 5);
-    printf("\n");
-    for (size_t i = 0; i < substr->length; i++) {
-        printf("%c", substr->data[i]);
-    }
-    printf("\n");
-    
-    string_free(test_str);
-    string_free(substr);
-    return 0;
-}
-
-
