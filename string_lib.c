@@ -150,12 +150,9 @@ void string_trim(string* str)
     for (end = str->length - 1; end > 0 && isspace(str->data[end]); end--)
         ;
 
-    size_t j;
-    for (j = 0; start <= end; start++, j++) {
-        str->data[j] = str->data[start];
-    }
-    str->data[j] = '\0';
-    str->length = j;
+    memmove(&str->data[0], &str->data[start], end - start + 1);
+    str->length = end - start + 1;
+    str->data[str->length] = '\0';
 }
 
 int string_compare(const string* s1, const string* s2)
