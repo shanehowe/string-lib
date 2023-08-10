@@ -45,15 +45,10 @@ bool string_concat(string* dest, const char* source)
 
     if (capacity_needed >= dest->capacity) {
         size_t new_capicity = capacity_needed + 1;
-        char* buffer = strdup(dest->data);
-        dest->data = realloc(dest->data, new_capicity);
-
-        if (NULL == dest->data) {
-            dest->data = buffer;
+        char* buffer = realloc(dest->data, new_capicity);
+        if (NULL == buffer) {
             return false;
         }
-
-        free(buffer);
         dest->capacity = capacity_needed + 1;
     }
 
