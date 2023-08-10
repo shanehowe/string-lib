@@ -44,20 +44,15 @@ bool string_concat(string* dest, const char* source)
     size_t capacity_needed = source_len + dest->length;
 
     if (capacity_needed >= dest->capacity) {
-        size_t new_capicity = capacity_needed + 1;
-        char* buffer = realloc(dest->data, new_capicity);
-        if (NULL == buffer) {
+        size_t new_capacity = capacity_needed + 1;
+
+        if (!string_reserve(dest, new_capacity))
             return false;
-        }
-        dest->capacity = capacity_needed + 1;
     }
 
-    size_t i, j;
-    for (i = dest->length, j = 0; j < source_len; i++, j++) {
-        dest->data[i] = source[j];
-    }
-    dest->data[i] = '\0';
+    memcpy(&dest->data[dest->length], source, source_len);
     dest->length += source_len;
+    dest->data[dest->length] = '\0'; // just make sure its terminated.
 
     return true;
 }
@@ -112,17 +107,10 @@ string* string_substr(const string* str, size_t start_index, size_t end_index)
 
 char* string_contains(const string* haystack, char* needle)
 {
-    size_t i, j, k;
-    size_t haylen = haystack->length;
-    size_t needlelen = strlen(needle);
+    if (haystack->length == 0)
+        return NULL;
 
-    for (i = 0; i < haylen; i++) {
-        for (j = i, k = 0; j < haylen && k < needlelen && haystack->data[j] == needle[k]; j++, k++)
-            ;
-        if (k == needlelen)
-            return &haystack->data[i];
-    }
-    return NULL;
+    return strstr(haystack->data, needle);
 }
 
 string* string_copy(const string* str)
